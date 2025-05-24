@@ -1,0 +1,158 @@
+/* HEADER LAYOUT */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  background-color: white;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* LAYOUT DE COLUNAS */
+.left,
+.center,
+.right {
+  display: flex;
+  align-items: center;
+}
+
+.left {
+  flex: 1;
+}
+
+.center {
+  flex: 2;
+  justify-content: center;
+}
+
+.right {
+  flex: 1;
+  justify-content: flex-end;
+}
+
+/* LOGO */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo img {
+  width: 30px;
+  height: 30px;
+}
+
+/* MENU CENTRALIZADO */
+.nav-menu {
+  display: flex;
+  gap: 30px;
+}
+
+.nav-menu a {
+  text-decoration: none;
+  color: #000;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.nav-menu a:hover {
+  color: #5b21b6;
+}
+
+/* BOTÃO DE PERFIL - ajustado para ter o mesmo tamanho do botão cancel */
+.profile-btn {
+  background-color: #ff7043;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-left: auto;
+}
+
+.profile-btn:hover {
+  background-color: #e85c32;
+}
+
+/* BANNER */
+.hero-banner {
+  background: url('/assets/banner.jpg') no-repeat center center/cover;
+  padding: 4rem;
+  color: white;
+  text-align: center;
+}
+
+/* CONTEÚDO DO FORMULÁRIO */
+.event-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.event-container .header h1 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #5e2ca5;
+}
+
+.event-form fieldset {
+  border: none;
+  margin-bottom: 1.5rem;
+}
+
+.event-form legend {
+  font-weight: bold;
+  color: #5e2ca5;
+  margin-bottom: 0.5rem;
+}
+
+.event-form input,
+.event-form textarea,
+.event-form select {
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.event-form .row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.event-form .row input {
+  flex: 1;
+}
+
+.address-section input {
+  margin-bottom: 0.5rem;
+}
+
+.buttons {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  color: white;
+  cursor: pointer;
+  margin: 0 0.5rem;
+}
+
+.btn.save {
+  background-color: #31a336;
+}
+

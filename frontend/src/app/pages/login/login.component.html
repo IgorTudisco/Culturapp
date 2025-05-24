@@ -1,14 +1,53 @@
-<div class="container mt-5">
-  <h2>Login</h2>
-  <form [formGroup]="loginForm" (ngSubmit)="login()">
-    <div class="mb-3">
-      <label>E-mail</label>
-      <input class="form-control" type="email" formControlName="email">
+<div class="d-flex vh-100">
+  <!-- Lado esquerdo -->
+  <div class="col-md-6 bg-light d-flex flex-column justify-content-start align-items-center px-5">
+
+    <!-- Header -->
+    <div class="w-100 mb-4 d-flex justify-content-between align-items-center mt-4">
+      <div class="d-flex align-items-center">
+        <div class="logo-box me-2">C</div>
+        <h3 class="mb-0">CulturApp</h3>
+      </div>
+
+      <div>
+        <a class="nav-link d-inline px-2 fw-bold" href="#">Home</a>
+        <a class="nav-link d-inline px-2 fw-bold" href="#">Eventos</a>
+        <a class="nav-link d-inline px-2 fw-bold" href="#">Faq</a>
+        <a class="nav-link d-inline px-2 fw-bold" href="#">Sobre</a>
+      </div>
     </div>
-    <div class="mb-3">
-      <label>Senha</label>
-      <input class="form-control" type="password" formControlName="password">
+
+    <!-- Formulário centralizado e com espaçamento abaixo do logo -->
+    <div class="d-flex justify-content-center align-items-start w-100" style="margin-top: 120px;">
+      <form [formGroup]="loginForm" (ngSubmit)="login()" class="w-100" style="max-width: 350px;">
+        <h3 class="mb-4 text-center">Entre na sua conta</h3>
+
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input class="form-control input-laranja-claro" type="email" formControlName="email" placeholder="Email" />
+        </div>
+
+        <div class="mb-2 position-relative">
+          <label class="form-label">Senha</label>
+          <input class="form-control input-laranja-claro" type="password" formControlName="password" placeholder="Senha" />
+          <small class="text-end d-block mt-1">
+            <a href="#" class="text-muted">Esqueceu a senha?</a>
+          </small>
+        </div>
+
+        <button type="submit" class="btn btn-login w-100 mt-3">Entrar</button>
+
+        <div class="text-center mt-3">
+          <small>Não tem conta?
+            <a href="#" class="text-orange fw-bold">Crie uma conta</a>
+          </small>
+        </div>
+      </form>
     </div>
-    <button class="btn btn-primary w-100" type="submit">Entrar</button>
-  </form>
+  </div>
+
+  <!-- Lado direito com imagem -->
+  <div class="col-md-6 d-none d-md-block p-0">
+    <img src="assets/teatro.jpg" alt="Teatro" class="img-fluid h-100 w-100 object-fit-cover" />
+  </div>
 </div>

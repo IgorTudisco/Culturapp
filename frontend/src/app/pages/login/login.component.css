@@ -1,0 +1,39 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.logo-box {
+  background-color: #6c4acb;
+  color: white;
+  font-weight: bold;
+  font-size: 24px;
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-login {
+  background-color: #ff7a59;
+  color: white;
+  font-weight: bold;
+}
+
+.btn-login:hover {
+  background-color: #ff5733;
+}
+
+.text-orange {
+  color: #ff7a59;
+}
+
+.img-fluid {
+  object-fit: cover;
+}
+
+.input-laranja-claro {
+  background-color: #fadad2;
+}
