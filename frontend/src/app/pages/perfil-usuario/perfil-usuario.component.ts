@@ -51,7 +51,6 @@ export class PerfilUsuarioComponent implements OnInit {
     if (!usuarioId) {
       this.router.navigate(['/home']);
     } else {
-      console.log('ID do usuário logado: ' + usuarioId);
       this.getUsuarioLogado(Number(usuarioId));
     }
   }

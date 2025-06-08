@@ -47,11 +47,9 @@ export class PerfilEmpresaComponent implements OnInit {
 
   ngOnInit(): void {
     const empresaId = localStorage.getItem('userId');
-    console.log('ID da empresa logada: ' + empresaId);
     if (!empresaId) {
       this.router.navigate(['/home']);
     } else {
-      console.log('ID da empresa logada: ' + empresaId);
       this.getEnterpriseLogado(Number(empresaId));
     }
   }
