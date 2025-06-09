@@ -26,62 +26,64 @@
 </section>
 
 <!-- CONTAINER DO FORMULÁRIO -->
-<div class="event-container">
-  <form class="event-form">
-    <fieldset>
-      <legend>Informações do Evento</legend>
+<div class="container">
+  <div class="form-container">
+    <h2>Preencha os detalhes do evento</h2>
+  </div>
+<form class="event-form" [formGroup]="eventoForm" (ngSubmit)="salvarEvento()">
+  <fieldset>
+    <legend>Informações do Evento</legend>
 
-      <input type="text" placeholder="Título do evento" />
-      <input type="text" placeholder="Tipo do evento" />
-      <textarea placeholder="Descrição do evento"></textarea>
+    <input type="text" placeholder="Título do evento" formControlName="titulo" />
+    <input type="text" placeholder="Tipo do evento" formControlName="tipo" />
+    <textarea placeholder="Descrição do evento" formControlName="descricao"></textarea>
 
-      <div class="row">
-        <input type="number" placeholder="Capacidade Local" />
-        <input type="number" placeholder="Menor valor do ingresso" />
-        <input type="number" placeholder="Pontos" />
-      </div>
-
-      <div class="address-section">
-        <input type="text" placeholder="CEP" />
-        <input type="text" placeholder="Número" />
-        <input type="text" placeholder="Estado" />
-        <input type="text" placeholder="Cidade" />
-        <input type="text" placeholder="Rua/Avenida" />
-        <input type="text" placeholder="Bairro" />
-        <input type="text" placeholder="Complemento" />
-      </div>
-    </fieldset>
-
-    <fieldset>
-      <legend>Dia e hora</legend>
-      <div class="row">
-        <label>Data início do evento:
-          <input type="date" />
-        </label>
-        <label>Data final do evento:
-          <input type="date" />
-        </label>
-        <label>Início da venda:
-          <input type="date" />
-        </label>
-        <label>Final da venda:
-          <input type="date" />
-        </label>
-      </div>
-    </fieldset>
-
-    <fieldset>
-      <legend>Status</legend>
-      <select>
-        <option>ATIVO</option>
-        <option>INATIVO</option>
-      </select>
-    </fieldset>
-
-    <div class="buttons">
-      <button class="btn save" type="submit">Salvar evento</button>
-      <button class="btn update" type="button" onclick="window.location.href='/editar-evento'">Atualizar evento</button>
-      <button class="btn cancel" type="button" onclick="window.location.href='/perfil-empresa'">Cancelar evento</button>
+    <div class="row">
+      <input type="number" placeholder="Capacidade Local" formControlName="capacidade" />
+      <input type="number" placeholder="Menor valor do ingresso" formControlName="valorIngresso" />
+      <input type="number" placeholder="Pontos" formControlName="pontos" />
     </div>
-  </form>
-</div>
+
+    <div class="address-section">
+      <input type="text" placeholder="CEP" formControlName="cep" />
+      <input type="text" placeholder="Número" formControlName="numero" />
+      <input type="text" placeholder="Estado" formControlName="estado" />
+      <input type="text" placeholder="Cidade" formControlName="cidade" />
+      <input type="text" placeholder="Rua/Avenida" formControlName="rua" />
+      <input type="text" placeholder="Bairro" formControlName="bairro" />
+      <input type="text" placeholder="Complemento" formControlName="complemento" />
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Dia e hora</legend>
+    <div class="row">
+      <label>Data início do evento:
+        <input type="date" formControlName="dataInicioEvento" />
+      </label>
+      <label>Data final do evento:
+        <input type="date" formControlName="dataFimEvento" />
+      </label>
+      <label>Início da venda:
+        <input type="date" formControlName="inicioVenda" />
+      </label>
+      <label>Final da venda:
+        <input type="date" formControlName="fimVenda" />
+      </label>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Status</legend>
+    <select formControlName="status">
+      <option value="ATIVO">ATIVO</option>
+      <option value="INATIVO">INATIVO</option>
+    </select>
+  </fieldset>
+
+  <div class="buttons">
+    <button class="btn save" type="submit">Salvar evento</button>
+    <button class="btn update" type="button" onclick="window.location.href='/editar-evento'">Atualizar evento</button>
+    <button class="btn cancel" type="button" onclick="window.location.href='/perfil-empresa'">Cancelar evento</button>
+  </div>
+</form>
