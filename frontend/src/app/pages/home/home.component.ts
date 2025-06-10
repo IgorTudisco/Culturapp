@@ -98,7 +98,7 @@ export class HomeComponent {
   }
 
   seeProfile() {
-    const accountType = localStorage.getItem('accountType');
+    const accountType = this.authService.getAccountType();
     if (accountType === 'ClientUser') {
       this.router.navigate(['/perfil-usuario']);
     } else {

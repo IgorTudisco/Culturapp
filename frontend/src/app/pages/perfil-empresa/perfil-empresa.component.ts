@@ -7,6 +7,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
 import { EnterpriseUserResponse } from '../../models/enterprise-user-response.model';
+import { AuthService } from '../../services/auth.service';
 @Component({
   standalone: true,
   selector: 'app-perfil-empresa',
@@ -25,7 +26,8 @@ export class PerfilEmpresaComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private enterpriseUserService: EnterpriseUserService
+    private enterpriseUserService: EnterpriseUserService,
+    private authService: AuthService
   ) {
     this.formulario = this.fb.group({
       userName: [this.empresa?.userName],
@@ -105,6 +107,24 @@ export class PerfilEmpresaComponent implements OnInit {
 
   editarEvento(id: number) {
     this.router.navigate(['/editar-evento'], { queryParams: { id } });
+  }
+
+  seeProfile() {
+    const accountType = localStorage.getItem('accountType');
+    if (accountType === 'ClientUser') {
+      this.router.navigate(['/perfil-usuario']);
+    } else {
+      this.router.navigate(['/perfil-empresa']);
+    }
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
+
+  checkIfLoggedIn(): boolean {
+    return this.authService.isLoggedIn();
   }
 
   eventos = [
