@@ -121,7 +121,7 @@ namespace Culturapp.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Checkings",
+                name: "Checks",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -130,7 +130,7 @@ namespace Culturapp.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Checkings", x => x.Id);
+                    table.PrimaryKey("PK_Checks", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -361,9 +361,9 @@ namespace Culturapp.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "FK_Events_Checkings_CheckingId",
+                        name: "FK_Events_Checks_CheckingId",
                         column: x => x.CheckingId,
-                        principalTable: "Checkings",
+                        principalTable: "Checks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
@@ -462,9 +462,9 @@ namespace Culturapp.Migrations
                 {
                     table.PrimaryKey("PK_CheckingsUsers", x => new { x.ChecksId, x.ClientUsersId });
                     table.ForeignKey(
-                        name: "FK_CheckingsUsers_Checkings_ChecksId",
+                        name: "FK_CheckingsUsers_Checks_ChecksId",
                         column: x => x.ChecksId,
-                        principalTable: "Checkings",
+                        principalTable: "Checks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -651,7 +651,7 @@ namespace Culturapp.Migrations
                 name: "Categories");
 
             migrationBuilder.DropTable(
-                name: "Checkings");
+                name: "Checks");
 
             migrationBuilder.DropTable(
                 name: "EnterpriseUsers");

@@ -4,7 +4,6 @@ namespace Culturapp.Models.Requests
 {
   public class EnterpriseUserRequest
   {
-    public string? Email { get; set; }
     public string? FullName { get; set; }
     public string? UserName { get; set; }
 
@@ -14,5 +13,6 @@ namespace Culturapp.Models.Requests
     public string? CNPJ { get; set; }
 
     public int? PhoneId { get; set; }
+    public int? AddressId { get; set; }
   }
 }

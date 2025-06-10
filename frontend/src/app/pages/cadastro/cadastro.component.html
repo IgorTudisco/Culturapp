@@ -21,96 +21,183 @@
 
       <form [formGroup]="cadastroForm" (ngSubmit)="cadastrar()">
         <div class="form-group">
-          <input type="text" placeholder="Nome Completo" formControlName="fullName"
-            [class.is-invalid]="f['fullName'].invalid && f['fullName'].touched" />
-          <div *ngIf="f['fullName'].invalid && f['fullName'].touched" class="error-message">
-            <div *ngIf="f['fullName'].errors?.['required']">Nome completo é obrigatório.</div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <select formControlName="accountType"
-            [class.is-invalid]="f['accountType'].invalid && f['accountType'].touched">
-            <option *ngFor="let type of accountTypes" [value]="type">
-              {{ type === 0 ? 'Conta Física (CPF)' : 'Conta Jurídica (CNPJ)' }}
-            </option>
-          </select>
-          <div *ngIf="f['accountType'].invalid && f['accountType'].touched" class="error-message">
-            <div *ngIf="f['accountType'].errors?.['required']">Tipo de conta é obrigatório.</div>
-          </div>
-        </div>
-
-        <div class="form-group" *ngIf="f['accountType'].value == 0">
-          <input type="text" placeholder="CPF" formControlName="cpf"
-            [class.is-invalid]="f['cpf'].invalid && f['cpf'].touched" />
-          <div *ngIf="f['cpf'].invalid && f['cpf'].touched" class="error-message">
-            <div *ngIf="f['cpf'].errors?.['required']">CPF é obrigatório.</div>
-            <div *ngIf="f['cpf'].errors?.['minlength'] || f['cpf'].errors?.['maxlength']">CPF deve ter 11 dígitos.</div>
-          </div>
-        </div>
-
-        <div class="form-group" *ngIf="f['accountType'].value == 1">
-          <input type="text" placeholder="CNPJ" formControlName="cnpj"
-            [class.is-invalid]="f['cnpj'].invalid && f['cnpj'].touched" />
-          <div *ngIf="f['cnpj'].invalid && f['cnpj'].touched" class="error-message">
-            <div *ngIf="f['cnpj'].errors?.['required']">CNPJ é obrigatório.</div>
-            <div *ngIf="f['cnpj'].errors?.['minlength'] || f['cnpj'].errors?.['maxlength']">CNPJ deve ter 14 dígitos.
+          <input
+            type="text"
+            placeholder="Nome Completo"
+            formControlName="fullName"
+            [class.is-invalid]="f['fullName'].invalid && f['fullName'].touched"
+          />
+          <div
+            *ngIf="f['fullName'].invalid && f['fullName'].touched"
+            class="error-message"
+          >
+            <div *ngIf="f['fullName'].errors?.['required']">
+              Nome completo é obrigatório.
             </div>
           </div>
         </div>
 
         <div class="form-group">
-          <input type="text" placeholder="Username" formControlName="userName"
-            [class.is-invalid]="f['userName'].invalid && f['userName'].touched" />
-          <div *ngIf="f['userName'].invalid && f['userName'].touched" class="error-message">
-            <div *ngIf="f['userName'].errors?.['required']">Username é obrigatório.</div>
+          <select
+            formControlName="accountType"
+            [class.is-invalid]="
+              f['accountType'].invalid && f['accountType'].touched
+            "
+          >
+            <option *ngFor="let type of accountTypes" [value]="type">
+              {{ type === 0 ? "Conta Física (CPF)" : "Conta Jurídica (CNPJ)" }}
+            </option>
+          </select>
+          <div
+            *ngIf="f['accountType'].invalid && f['accountType'].touched"
+            class="error-message"
+          >
+            <div *ngIf="f['accountType'].errors?.['required']">
+              Tipo de conta é obrigatório.
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group" *ngIf="f['accountType'].value == 0">
+          <input
+            type="text"
+            placeholder="CPF"
+            formControlName="cpf"
+            [class.is-invalid]="f['cpf'].invalid && f['cpf'].touched"
+          />
+          <div
+            *ngIf="f['cpf'].invalid && f['cpf'].touched"
+            class="error-message"
+          >
+            <div *ngIf="f['cpf'].errors?.['required']">CPF é obrigatório.</div>
+            <div
+              *ngIf="f['cpf'].errors?.['minlength'] || f['cpf'].errors?.['maxlength']"
+            >
+              CPF deve ter 11 dígitos.
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group" *ngIf="f['accountType'].value == 1">
+          <input
+            type="text"
+            placeholder="CNPJ"
+            formControlName="cnpj"
+            [class.is-invalid]="f['cnpj'].invalid && f['cnpj'].touched"
+          />
+          <div
+            *ngIf="f['cnpj'].invalid && f['cnpj'].touched"
+            class="error-message"
+          >
+            <div *ngIf="f['cnpj'].errors?.['required']">
+              CNPJ é obrigatório.
+            </div>
+            <div
+              *ngIf="f['cnpj'].errors?.['minlength'] || f['cnpj'].errors?.['maxlength']"
+            >
+              CNPJ deve ter 14 dígitos.
+            </div>
           </div>
         </div>
 
         <div class="form-group">
-          <input type="email" placeholder="Email" formControlName="email"
-            [class.is-invalid]="f['email'].invalid && f['email'].touched" />
-          <div *ngIf="f['email'].invalid && f['email'].touched" class="error-message">
-            <div *ngIf="f['email'].errors?.['required']">Email é obrigatório.</div>
+          <input
+            type="text"
+            placeholder="Username"
+            formControlName="userName"
+            [class.is-invalid]="f['userName'].invalid && f['userName'].touched"
+          />
+          <div
+            *ngIf="f['userName'].invalid && f['userName'].touched"
+            class="error-message"
+          >
+            <div *ngIf="f['userName'].errors?.['required']">
+              Username é obrigatório.
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <input
+            type="email"
+            placeholder="Email"
+            formControlName="email"
+            [class.is-invalid]="f['email'].invalid && f['email'].touched"
+          />
+          <div
+            *ngIf="f['email'].invalid && f['email'].touched"
+            class="error-message"
+          >
+            <div *ngIf="f['email'].errors?.['required']">
+              Email é obrigatório.
+            </div>
             <div *ngIf="f['email'].errors?.['email']">Email inválido.</div>
           </div>
         </div>
 
         <div class="form-group password-field">
-          <input [type]="showPassword ? 'text' : 'password'" placeholder="Senha" formControlName="password"
-            [class.is-invalid]="f['password'].invalid && f['password'].touched" />
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            placeholder="Senha"
+            formControlName="password"
+            [class.is-invalid]="f['password'].invalid && f['password'].touched"
+          />
           <span (click)="togglePasswordVisibility()" class="toggle-eye">
-            {{ showPassword ? '🙈' : '👁️' }}
+            {{ showPassword ? "🙈" : "👁️" }}
           </span>
-          <div *ngIf="f['password'].invalid && f['password'].touched" class="error-message">
-            <div *ngIf="f['password'].errors?.['required']">Senha é obrigatória.</div>
-            <div *ngIf="f['password'].errors?.['minlength']">Senha deve ter no mínimo 6 caracteres.</div>
+          <div
+            *ngIf="f['password'].invalid && f['password'].touched"
+            class="error-message"
+          >
+            <div *ngIf="f['password'].errors?.['required']">
+              Senha é obrigatória.
+            </div>
+            <div *ngIf="f['password'].errors?.['minlength']">
+              Senha deve ter no mínimo 6 caracteres.
+            </div>
           </div>
         </div>
 
         <div class="form-group password-field">
-          <input [type]="showConfirmPassword ? 'text' : 'password'" placeholder="Confirme a senha"
+          <input
+            [type]="showConfirmPassword ? 'text' : 'password'"
+            placeholder="Confirme a senha"
             formControlName="confirmPassword"
-            [class.is-invalid]="f['confirmPassword'].invalid && f['confirmPassword'].touched || cadastroForm.errors?.['passwordMismatch']" />
+            [class.is-invalid]="f['confirmPassword'].invalid && f['confirmPassword'].touched || cadastroForm.errors?.['passwordMismatch']"
+          />
           <span (click)="toggleConfirmPasswordVisibility()" class="toggle-eye">
-            {{ showConfirmPassword ? '🙈' : '👁️' }}
+            {{ showConfirmPassword ? "🙈" : "👁️" }}
           </span>
           <div
             *ngIf="f['confirmPassword'].invalid && f['confirmPassword'].touched || cadastroForm.errors?.['passwordMismatch']"
-            class="error-message">
-            <div *ngIf="f['confirmPassword'].errors?.['required']">Confirmação de senha é obrigatória.</div>
-            <div *ngIf="cadastroForm.errors?.['passwordMismatch']">As senhas não coincidem.</div>
+            class="error-message"
+          >
+            <div *ngIf="f['confirmPassword'].errors?.['required']">
+              Confirmação de senha é obrigatória.
+            </div>
+            <div *ngIf="cadastroForm.errors?.['passwordMismatch']">
+              As senhas não coincidem.
+            </div>
           </div>
         </div>
 
-        <button type="submit" class="submit-button" [disabled]="cadastroForm.invalid">Criar cadastro</button>
+        <button
+          type="submit"
+          class="submit-button"
+          [disabled]="cadastroForm.invalid"
+        >
+          Criar cadastro
+        </button>
       </form>
 
-      <p class="login-link">Já tem uma conta? <a routerLink="/login">Entre</a></p>
+      <p class="login-link">Já tem uma conta? <a href="/login">Entre</a></p>
     </div>
 
     <div class="cadastro-image-wrapper">
-      <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?q=80&w=1000" alt="Show" />
+      <img
+        src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?q=80&w=1000"
+        alt="Show"
+      />
     </div>
   </main>
 </div>

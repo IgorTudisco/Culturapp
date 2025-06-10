@@ -35,21 +35,21 @@ namespace Culturapp.Controller
       return Ok(user);
     }
 
-    [HttpPut("UpdateEnterpriseUser")]
-    public async Task<IActionResult> PutEnterpriseUser([FromBody] EnterpriseUserRequest enterpriseUserRequest)
+    [HttpPut("UpdateEnterpriseUser/{id}")]
+    public async Task<IActionResult> PutEnterpriseUser(int id, [FromBody] EnterpriseUserRequest enterpriseUserRequest)
     {
       if (!ModelState.IsValid)
       {
         return BadRequest(ModelState);
       }
 
-      var updatedUser = await _enterpriseUserService.UpdateEnterpriseUserAsync(enterpriseUserRequest);
+      var updatedUser = await _enterpriseUserService.UpdateEnterpriseUserAsync(id, enterpriseUserRequest);
       if (updatedUser == null)
       {
         return NotFound();
       }
 
-      return Ok(updatedUser);
+      return NoContent();
     }
 
     [HttpDelete("DeleteEnterpriseUser/{id}")]

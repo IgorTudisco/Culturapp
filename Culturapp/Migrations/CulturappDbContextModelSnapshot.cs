@@ -194,7 +194,7 @@ namespace Culturapp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Checkings");
+                    b.ToTable("Checks");
                 });
 
             modelBuilder.Entity("Culturapp.Models.ClientUser", b =>

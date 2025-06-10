@@ -6,21 +6,20 @@
     </div>
   </div>
 
-  <div class="center">
-    <nav class="nav-menu">
-      <a href="/home">Home</a>
-      <a href="/eventpage">Eventos</a>
-      <a href="/faq">FAQ</a>
-      <a href="#">Sobre</a>
-    </nav>
-  </div>
+  <ul class="nav-links">
+    <li><a href="/home" routerLink="/home">Home</a></li>
+    <li><a href="/eventpage" routerLink="/eventpage">Eventos</a></li>
+    <li><a href="/faq" routerLink="/faq">FAQ</a></li>
+    <li><a href="/sobre" class="nav-active">Sobre</a></li>
+  </ul>
 
-  <div class="right">
-    <a class="profile-btn" href="/perfil-usuario" style="text-decoration: none;">Perfil</a>
+  <div class="auth-buttons">
+    <button class="signup" (click)="verCadastro()">Cadastro</button>
+    <button class="login" (click)="verLogin()">Login</button>
   </div>
 </header>
 
-<body>
+<main class="containerColor">
   <section class="sobre-title">
     <h1 class="linha-custom">SOBRE</h1>
   </section>
@@ -70,7 +69,7 @@
 
           <div class="membro">
             <p>
-              <span>Cris</span>
+              <span>Cris A.</span>
               <a href="#"
                 ><img src="../../../assets/img/github-icon.png" alt="GitHub"
               /></a>
@@ -84,7 +83,7 @@
 
           <div class="membro">
             <p>
-              <span>Igor</span>
+              <span>Igor T.</span>
               <a href="#"
                 ><img src="../../../assets/img/github-icon.png" alt="GitHub"
               /></a>
@@ -98,7 +97,7 @@
 
           <div class="membro">
             <p>
-              <span>Jaqueline</span>
+              <span>Jaque</span>
               <a href="https://github.com/JaquePaula"
                 ><img src="../../../assets/img/github-icon.png" alt="GitHub"
               /></a>
@@ -145,13 +144,13 @@
         <div class="rodape-coluna">
           <span style="font-size: 1.5rem"><b>Links</b></span>
           <p style="margin-top: 2rem">
-            <a href="#fale_conosco">Fale Conosco</a>
+            <a href="#sobre">Fale Conosco</a>
           </p>
           <p><a href="#sobre">Sobre</a></p>
-          <p><a href="#equipe">Equipe</a></p>
-          <p><a href="#teatro">Teatro</a></p>
-          <p><a href="#shows">Shows</a></p>
-          <p><a href="#agenda">Agenda</a></p>
+          <p><a href="#sobre">Equipe</a></p>
+          <p><a href="#">Teatro</a></p>
+          <p><a href="#">Shows</a></p>
+          <p><a href="#">Agenda</a></p>
         </div>
       </div>
     </div>
@@ -161,4 +160,4 @@
       1U.345.A78/0001-90
     </p>
   </footer>
-</body>
+</main>

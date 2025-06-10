@@ -12,7 +12,7 @@
       <li><a href="/sobre" routerLink="/sobre">Sobre</a></li>
     </ul>
     <div class="auth-buttons">
-      <button class="signup" (click)="verCadastro()">Signup</button>
+      <button class="signup" (click)="verCadastro()">Cadastro</button>
       <button class="login" (click)="verLogin()">Login</button>
     </div>
   </nav>
@@ -25,7 +25,11 @@
 
 <!-- Filtro -->
 <section class="filtros">
-  <input type="text" placeholder="Pesquisar artista ou evento" [(ngModel)]="termoPesquisa" />
+  <input
+    type="text"
+    placeholder="Pesquisar artista ou evento"
+    [(ngModel)]="termoPesquisa"
+  />
   <select [(ngModel)]="categoriaSelecionada">
     <option>Todas categorias</option>
     <option>Show</option>
@@ -37,7 +41,7 @@
 
 <!-- Carrossel de eventos -->
 <section class="eventos">
-  <div class="event-card" *ngFor="let evento of eventosFiltrados; ">
+  <div class="event-card" *ngFor="let evento of eventosFiltrados">
     <img [src]="evento.imagem" alt="evento" />
     <div class="event-info">
       <h3>{{ evento.titulo }}</h3>
@@ -49,30 +53,29 @@
 </section>
 
 <div class="ver-todos">
-  <button class="ver-todos-btn" (click)="verTodosEventos()">VER TODOS OS EVENTOS</button>
+  <button class="ver-todos-btn" (click)="verTodosEventos()">
+    VER TODOS OS EVENTOS
+  </button>
 </div>
 
 <!-- Rodapé -->
 <footer class="footer">
   <div class="coluna">
-    <h4>Menu</h4>
-    <p>Home</p>
-    <p>Eventos</p>
-    <p>Sobre</p>
-    <p>Faq</p>
+    <p><a href="/">Home</a></p>
+    <p><a href="/eventos">Eventos</a></p>
+    <p><a href="/sobre">Sobre</a></p>
+    <p><a href="/faq">Faq</a></p>
   </div>
   <div class="coluna">
-    <h4>Informação</h4>
-    <p>Sobre o CulturApp</p>
-    <p>Suporte</p>
-    <p>Termos e Condições</p>
-    <p>Privacy</p>
+    <p><a href="/sobre">Sobre o CulturApp</a></p>
+    <p><a href="/faq">Suporte</a></p>
+    <p><a href="/#">Termos e Condições</a></p>
+    <p><a href="/#">Privacy</a></p>
   </div>
   <div class="coluna">
     <h4>Contato</h4>
     <p>+11 9999-9999</p>
     <p>São Paulo, Brasil</p>
-    <div class="social">
-    </div>
+    <div class="social"></div>
   </div>
 </footer>

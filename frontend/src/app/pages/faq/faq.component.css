@@ -3,19 +3,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 40px;
+  padding: 20px 40px;
   background-color: white;
 }
 
-.body {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 40px;
-  background-color: #43254c;
-}
-
-/* LAYOUT DE COLUNAS */
+/* LAYOUT DE COLUNAS
 .left,
 .center,
 .right {
@@ -35,7 +27,7 @@
 .right {
   flex: 1;
   justify-content: flex-end;
-}
+} */
 
 /* LOGO */
 .logo {
@@ -49,7 +41,7 @@
   height: 30px;
 }
 
-/* MENU CENTRALIZADO */
+/* MENU */
 .nav-menu {
   display: flex;
   gap: 30px;
@@ -66,8 +58,70 @@
   color: #5b21b6;
 }
 
-/* BOTÃO DE PERFIL - ajustado para ter o mesmo tamanho do botão cancel */
-.profile-btn {
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  color: #000000;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.5rem 0;
+  position: relative;
+  transition: color 0.3s;
+}
+
+.nav-links a::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 3px;
+  background: #ff7757;
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  border-radius: 2px;
+  transition: width 0.3s;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.nav-links a.nav-active {
+  color: #ff7757;
+  font-weight: bold;
+}
+
+.nav-links a.nav-active::after {
+  width: 100%;
+  background: #ff7757;
+}
+
+.auth-buttons button {
+  margin-left: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.signup {
+  background: #ff7757;
+  color: white;
+}
+
+.login {
+  background: #ff7757;
+  color: white;
+}
+
+/* BOTÃO DE PERFIL */
+/* .profile-btn {
   background-color: #ff7043;
   color: white;
   border: none;
@@ -82,7 +136,7 @@
 
 .profile-btn:hover {
   background-color: #e85c32;
-}
+} */
 
 /* TITLE */
 .faq-title {

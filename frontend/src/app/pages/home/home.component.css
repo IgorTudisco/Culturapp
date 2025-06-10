@@ -241,10 +241,13 @@
   margin-top: 40px;
 }
 
-.footer .coluna {
+.footer .coluna a{
   display: flex;
   flex-direction: column;
   gap: 10px;
+  text-decoration: none;
+  color: white;
+  padding: 10px 20px;
 }
 
 .footer h4 {

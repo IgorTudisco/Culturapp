@@ -10,8 +10,9 @@ namespace Culturapp.Models.Responses
     public string? City { get; set; }
     public string? State { get; set; }
     public string? ZipCode { get; set; }
-
     public int? EnterpriseUserId { get; set; }
     public int? EventId { get; set; }
+    public Event? Event { get; set; }
+    public EnterpriseUser? EnterpriseUser { get; set; }
   }
 }

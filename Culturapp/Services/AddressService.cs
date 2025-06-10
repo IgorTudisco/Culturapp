@@ -2,6 +2,7 @@ using AutoMapper;
 using Culturapp.Data;
 using Culturapp.Models;
 using Culturapp.Models.Requests;
+using Culturapp.Models.Responses;
 using Microsoft.EntityFrameworkCore;
 
 namespace Culturapp.Services
@@ -17,9 +18,18 @@ namespace Culturapp.Services
       _mapper = mapper;
     }
 
-    public async Task<Address?> GetAddressByIdAsync(int id)
+    public async Task<AddressResponse?> GetAddressByIdAsync(int id)
     {
-      return await _context.Addresses.FindAsync(id);
+      var address = await _context.Addresses.Include(a => a.Event).Include(a => a.EnterpriseUser).FirstOrDefaultAsync(a => a.Id == id);
+      var addressResponse = _mapper.Map<AddressResponse>(address);
+      return addressResponse;
+    }
+
+    public async Task<List<AddressResponse>> GetAllAddressesAsync()
+    {
+      var addresses = await _context.Addresses.Include(a => a.Event).Include(a => a.EnterpriseUser).ToListAsync();
+      var addressResponses = _mapper.Map<List<AddressResponse>>(addresses);
+      return addressResponses;
     }
 
     public async Task CreateAddressAsync(AddressRequest addressRequest)
@@ -29,7 +39,7 @@ namespace Culturapp.Services
       await _context.SaveChangesAsync();
     }
 
-    public async Task<Address?> UpdateAddressAsync(int id, AddressRequest? addressRequest)
+    public async Task<AddressResponse?> UpdateAddressAsync(int id, AddressRequest? addressRequest)
     {
       var address = await _context.Addresses.FindAsync(id);
 
@@ -44,7 +54,8 @@ namespace Culturapp.Services
       _context.Addresses.Update(address);
       await _context.SaveChangesAsync();
 
-      return address;
+      var addressResponse = _mapper.Map<AddressResponse>(address);
+      return addressResponse;
     }
 
     public async Task DeleteAddressAsync(int id)

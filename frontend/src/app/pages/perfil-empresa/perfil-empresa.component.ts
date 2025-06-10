@@ -1,10 +1,12 @@
+import { EnterpriseUserRequest } from './../../models/enterprise-user-request.model';
+import { EnterpriseUserService } from './../../services/enterprise-user.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
-
+import { EnterpriseUserResponse } from '../../models/enterprise-user-response.model';
 @Component({
   standalone: true,
   selector: 'app-perfil-empresa',
@@ -14,42 +16,92 @@ import { Router } from '@angular/router';
 })
 export class PerfilEmpresaComponent implements OnInit {
   formulario: FormGroup;
+  formularioUpdate: FormGroup;
   abaDadosAtiva: string = 'perfil';
 
-  empresa = {
-    nome: 'Empresa XYZ',
-    userName: 'empresaXYZ',
-    email: 'contato@empresaxyz.com',
-    emailTruncado: 'contato@empresaxyz.com',
-    telefone: '11 9259-6524',
-    documento: '12.345.678/0001-00',
-    nascimento: '28-01-1988',
-    foto: 'assets/img/usuario.png',
-    endereco: 'Rua das Flores, 123, São Paulo, SP',
-  };
+  empresa?: EnterpriseUserResponse;
+  UpdateEmpresa?: EnterpriseUserRequest;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private enterpriseUserService: EnterpriseUserService
+  ) {
     this.formulario = this.fb.group({
-      nome: [this.empresa.nome],
-      userName: [this.empresa.userName],
-      email: [this.empresa.email],
-      telefone: [this.empresa.telefone],
-      documento: [this.empresa.documento],
-      nascimento: [this.empresa.nascimento],
-      endereco: [this.empresa.endereco],
+      userName: [this.empresa?.userName],
+      fullName: [this.empresa?.fullName],
+      email: [this.empresa?.email],
+      areaCode: [this.empresa?.phones?.[0]?.areaCode],
+      phoneNumber: [this.empresa?.phones?.[0]?.phoneNumber],
+      cnpj: [this.empresa?.cnpj],
+      street: [this.empresa?.address?.street],
+      number: [this.empresa?.address?.number],
+      complement: [this.empresa?.address?.complement],
+      neighborhood: [this.empresa?.address?.neighborhood],
+      zipCode: [this.empresa?.address?.zipCode],
+      city: [this.empresa?.address?.city],
+      state: [this.empresa?.address?.state],
     });
+    this.formularioUpdate = this.formulario;
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    const empresaId = localStorage.getItem('userId');
+    console.log('ID da empresa logada: ' + empresaId);
+    if (!empresaId) {
+      this.router.navigate(['/home']);
+    } else {
+      console.log('ID da empresa logada: ' + empresaId);
+      this.getEnterpriseLogado(Number(empresaId));
+    }
+  }
+
+  getEnterpriseLogado(id: number): void {
+    this.enterpriseUserService.getEnterpriseUserById(id).subscribe({
+      next: (empresa) => {
+        this.empresa = empresa;
+        this.formulario.patchValue({
+          fullName: empresa.fullName,
+          userName: empresa.userName,
+          email: empresa.email,
+          areaCode: empresa.phones?.[0]?.areaCode,
+          phoneNumber: empresa.phones?.[0]?.phoneNumber,
+          cnpj: empresa.cnpj,
+          street: empresa.address?.street,
+          number: empresa.address?.number,
+          neighborhood: empresa.address?.neighborhood,
+          complement: empresa.address?.complement,
+          city: empresa.address?.city,
+          state: empresa.address?.state,
+          zipCode: empresa.address?.zipCode,
+        });
+        console.log('Empresa logada:', this.empresa);
+      },
+    });
+  }
 
   mudarAbaDados(aba: string): void {
     this.abaDadosAtiva = aba;
   }
 
   salvarDados(): void {
-    if (this.formulario.valid) {
-      console.log('Dados salvos:', this.formulario.value);
-      this.empresa = { ...this.empresa, ...this.formulario.value };
+    if (this.formularioUpdate.valid) {
+      console.log('Dados salvos:', this.formularioUpdate.value);
+
+      this.UpdateEmpresa = this.formularioUpdate.value;
+      var id = Number(localStorage.getItem('userId'));
+
+      this.enterpriseUserService
+        .updateEnterpriseUser(id, this.UpdateEmpresa!)
+        .subscribe({
+          next: () => {
+            alert('Dados atualizados com sucesso!');
+          },
+          error: (error) => {
+            console.error('Erro ao atualizar usuário:', error);
+            alert('Erro ao atualizar dados. Tente novamente mais tarde.');
+          },
+        });
     }
   }
 

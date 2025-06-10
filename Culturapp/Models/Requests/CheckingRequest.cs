@@ -1,7 +1,3 @@
-
-
-using Culturapp.Models.Responses;
-
 namespace Culturapp.Models.Requests;
 
 public class CheckingRequest

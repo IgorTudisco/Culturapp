@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment.development';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
@@ -8,9 +9,13 @@ import { RegisterRequest } from '../models/register-request.model';
   providedIn: 'root'
 })
 export class AuthService {
+
   private apiUrl = 'http://localhost:5115/api/Auth';
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) { }
 
   cadastrar(dados: RegisterRequest): Observable<RegisterRequest> {
     debugger
@@ -23,16 +28,19 @@ export class AuthService {
     debugger;
     return this.http.post(`${this.apiUrl}/login`, dados).pipe(
       map((res: any) => {
-        console.log(res);
         localStorage.setItem('token', res.token);
-        this.router.navigate(['/eventpage']);
+        localStorage.setItem('userId', res.userId);
+        localStorage.setItem('userName', res.userName);
+        localStorage.setItem('email', res.email);
+        localStorage.setItem('accountType', res.accountType);
+        this.router.navigate(['/home']);
       })
     );
   }
 
   logout() {
     localStorage.removeItem('token');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/home']);
   }
 
   estaLogado(): boolean {

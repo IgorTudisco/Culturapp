@@ -20,14 +20,21 @@ namespace Culturapp.Services
 
     public async Task<List<ClientUserResponse>> GetClientUsersAsync()
     {
-      var clientList = await _context.ClientUsers.ToListAsync();
+      var clientList = await _context.ClientUsers.Include(c => c.Phone).Include(c => c.Address).Include(c => c.Events).Include(c => c.Checks).ToListAsync();
       var clientUserResponses = _mapper.Map<List<ClientUserResponse>>(clientList);
       return clientUserResponses;
     }
 
     public async Task<ClientUserResponse?> GetClientUserByIdAsync(int id)
     {
-      var clientUser = await _context.ClientUsers.FindAsync(id);
+      var clientUser = await _context.ClientUsers.Include(c => c.Phone).Include(c => c.Address).Include(c => c.Events).Include(c => c.Checks).FirstOrDefaultAsync(c => c.Id == id);
+      var clientUserResponse = _mapper.Map<ClientUserResponse>(clientUser);
+      return clientUserResponse;
+    }
+
+    public async Task<ClientUserResponse?> GetClientUserByEmailAsync(string email)
+    {
+      var clientUser = await _context.ClientUsers.Include(c => c.Phone).Include(c => c.Address).Include(c => c.Events).Include(c => c.Checks).FirstOrDefaultAsync(c => c.Email == email);
       var clientUserResponse = _mapper.Map<ClientUserResponse>(clientUser);
       return clientUserResponse;
     }
@@ -64,8 +71,6 @@ namespace Culturapp.Services
 
       if (existing == null) return null;
 
-
-      existing.Email = clientUserRequest.Email;
       existing.FullName = clientUserRequest.FullName;
       existing.UserName = clientUserRequest.UserName;
       existing.CPF = clientUserRequest.CPF;

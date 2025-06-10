@@ -69,7 +69,6 @@ body {
   margin-left: 0.5rem;
 }
 
-/* Barra animada embaixo dos itens da navbar */
 .nav-underline {
   position: relative;
   text-decoration: none;

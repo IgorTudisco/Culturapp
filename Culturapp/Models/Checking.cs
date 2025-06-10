@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Culturapp.Models;
 
-[Table("Checkings")]
+[Table("Checks")]
 public class Checking
 {
     [Key]

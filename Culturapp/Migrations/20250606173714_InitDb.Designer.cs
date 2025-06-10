@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Culturapp.Migrations
 {
     [DbContext(typeof(CulturappDbContext))]
-    [Migration("20250531160222_InitDb")]
+    [Migration("20250606173714_InitDb")]
     partial class InitDb
     {
         /// <inheritdoc />
@@ -197,7 +197,7 @@ namespace Culturapp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Checkings");
+                    b.ToTable("Checks");
                 });
 
             modelBuilder.Entity("Culturapp.Models.ClientUser", b =>

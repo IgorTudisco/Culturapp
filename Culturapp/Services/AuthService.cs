@@ -103,14 +103,32 @@ namespace Culturapp.Services
         if (result.Succeeded)
         {
           var token = GenerateToken(user);
-          return new LoginResponse
+          var userClient = await _clientUserService.GetClientUserByEmailAsync(user.Email!);
+          var userEnterprise = await _enterpriseUserService.GetEnterpriseUserEmailAsync(user.Email!);
+
+          if (userClient != null)
           {
-            Token = token,
-            AccountType = user.AccountType.ToString(),
-            UserName = user.UserName,
-            Email = user.Email,
-            UserId = user.Id
-          };
+            return new LoginResponse
+            {
+              Token = token,
+              AccountType = user.AccountType.ToString(),
+              UserName = user.UserName,
+              Email = user.Email,
+              UserId = userClient.Id
+            };
+          }
+          else if (userEnterprise != null)
+          {
+            return new LoginResponse
+            {
+              Token = token,
+              AccountType = user.AccountType.ToString(),
+              UserName = user.UserName,
+              Email = user.Email,
+              UserId = userEnterprise.Id
+            };
+          }
+
         }
       }
 

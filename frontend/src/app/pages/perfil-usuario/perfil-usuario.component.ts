@@ -4,6 +4,10 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
+import { ClientUserResponse } from '../../models/client-user-response.model';
+import { ClientUserService } from '../../services/client-user.service';
+import { environment } from '../../../environments/environment.development';
+import { ClientUserRequest } from '../../models/client-user-request.model';
 
 @Component({
   standalone: true,
@@ -14,48 +18,93 @@ import { Router } from '@angular/router';
 })
 export class PerfilUsuarioComponent implements OnInit {
   formulario: FormGroup;
+  formularioUpdate: FormGroup;
   abaDadosAtiva: string = 'perfil';
 
-  usuario = {
-    nome: 'Igor de Andrade Tudisco',
-    userName: 'igor.tudisco',
-    email: 'igor.tudisco@gmail.com',
-    emailTruncado: 'igor.tudisco@gmail.com',
-    telefone: '17 9999-9999',
-    documento: '654.321.987-00',
-    nascimento: '28-01-1988',
-    foto: 'assets/img/usuario.png',
-    endereco: 'Rua das Flores, 123, São Paulo, SP',
-  };
+  usuario?: ClientUserResponse;
+  usuarioUpdate?: ClientUserRequest;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private clientUserService: ClientUserService
+  ) {
     this.formulario = this.fb.group({
-      nome: [this.usuario.nome],
-      userName: [this.usuario.userName],
-      email: [this.usuario.email],
-      telefone: [this.usuario.telefone],
-      documento: [this.usuario.documento],
-      nascimento: [this.usuario.nascimento],
-      endereco: [this.usuario.endereco],
+      fullName: [this.usuario?.fullName],
+      userName: [this.usuario?.userName],
+      areaCode: [this.usuario?.phone?.areaCode],
+      phoneNumber: [this.usuario?.phone?.phoneNumber],
+      cpf: [this.usuario?.cpf],
+      street: [this.usuario?.address?.street],
+      number: [this.usuario?.address?.number],
+      neighborhood: [this.usuario?.address?.neighborhood],
+      complement: [this.usuario?.address?.complement],
+      city: [this.usuario?.address?.city],
+      state: [this.usuario?.address?.state],
+      zipCode: [this.usuario?.address?.zipCode],
     });
+    this.formularioUpdate = this.formulario;
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    const usuarioId = localStorage.getItem('userId');
+    if (!usuarioId) {
+      this.router.navigate(['/home']);
+    } else {
+      console.log('ID do usuário logado: ' + usuarioId);
+      this.getUsuarioLogado(Number(usuarioId));
+    }
+  }
+
+  getUsuarioLogado(id: number): void {
+    this.clientUserService.getClientUserById(id).subscribe({
+      next: (usuario) => {
+        this.usuario = usuario;
+        this.formulario.patchValue({
+          fullName: usuario.fullName,
+          userName: usuario.userName,
+          areaCode: usuario.phone?.areaCode,
+          phoneNumber: usuario.phone?.phoneNumber,
+          cpf: usuario.cpf,
+          street: usuario.address?.street,
+          number: usuario.address?.number,
+          neighborhood: usuario.address?.neighborhood,
+          complement: usuario.address?.complement,
+          city: usuario.address?.city,
+          state: usuario.address?.state,
+          zipCode: usuario.address?.zipCode,
+        });
+      },
+    });
+  }
 
   mudarAbaDados(aba: string): void {
     this.abaDadosAtiva = aba;
   }
 
   salvarDados(): void {
-    if (this.formulario.valid) {
-      console.log('Dados salvos:', this.formulario.value);
-      this.usuario = { ...this.usuario, ...this.formulario.value };
+    if (this.formularioUpdate.valid) {
+      console.log('Dados salvos:', this.formularioUpdate.value);
+
+      this.usuarioUpdate = this.formularioUpdate.value;
+      var id = Number(localStorage.getItem('userId'));
+
+      this.clientUserService
+        .updateClientUser(id, this.usuarioUpdate!)
+        .subscribe({
+          next: () => {
+            alert('Dados atualizados com sucesso!');
+          },
+          error: (error) => {
+            console.error('Erro ao atualizar usuário:', error);
+            alert('Erro ao atualizar dados. Tente novamente mais tarde.');
+          },
+        });
     }
   }
 
   sair(): void {
     console.log('Usuário saiu do sistema');
-    // Aqui você pode adicionar a lógica de logout
   }
 
   eventos = [

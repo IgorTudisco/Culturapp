@@ -90,7 +90,7 @@
 
 /* Sidebar */
 .sidebar {
-  width: 260px;
+  width: 280px;
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -241,6 +241,35 @@ form {
   padding: 8px;
   border-radius: 8px;
   border: 1px solid #ccc;
+}
+
+.form-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.form-row .form-group.half {
+  flex: 1;
+}
+
+.telefone-container {
+  display: flex;
+  gap: 10px;
+}
+
+.telefone-container input {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.ddd-input {
+  width: 25%;
+}
+
+.telefone-input {
+  width: 75%;
 }
 
 input[readonly] {

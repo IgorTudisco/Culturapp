@@ -26,8 +26,8 @@
     <div class="profile">
       <img src="assets/img/usuario.png" alt="Foto do Usuário" />
       <div class="info">
-        <strong>{{ empresa.nome }}</strong>
-        <span>{{ empresa.emailTruncado }}</span>
+        <strong>{{ empresa?.userName }}</strong>
+        <span>{{ empresa?.email }}</span>
       </div>
     </div>
 
@@ -45,7 +45,6 @@
         </li>
       </ul>
     </nav>
-
   </aside>
 
   <!-- Conteúdo principal -->
@@ -57,7 +56,7 @@
       <form [formGroup]="formulario">
         <div class="form-group">
           <label>Nome</label>
-          <input formControlName="nome" type="text" readonly />
+          <input formControlName="fullName" type="text" readonly />
         </div>
         <div class="form-group">
           <label>UserName</label>
@@ -69,19 +68,49 @@
         </div>
         <div class="form-group">
           <label>Telefone</label>
-          <input formControlName="telefone" type="text" readonly />
+          <div class="telefone-container">
+            <input type="text" formControlName="areaCode" placeholder="DDD" class="ddd-input" />
+            <input type="text" formControlName="phoneNumber" placeholder="Número" class="telefone-input" />
+          </div>
         </div>
         <div class="form-group">
           <label>CNPJ</label>
-          <input formControlName="documento" type="text" readonly />
+          <input formControlName="cnpj" type="text" readonly />
         </div>
         <div class="form-group">
-          <label>Data de Fundação</label>
-          <input formControlName="nascimento" type="text" readonly />
+          <label>Rua</label>
+          <input formControlName="street" type="text" placeholder="Rua" />
         </div>
-        <div class="form-group">
-          <label>Endereço</label>
-          <input formControlName="endereco" type="text" readonly />
+
+        <div class="form-row">
+          <div class="form-group half">
+            <label>Número</label>
+            <input formControlName="number" type="text" placeholder="Número" />
+          </div>
+          <div class="form-group half">
+            <label>Complemento</label>
+            <input formControlName="complement" type="text" placeholder="Complemento" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group half">
+            <label>Bairro</label>
+            <input formControlName="neighborhood" type="text" placeholder="Bairro" />
+          </div>
+          <div class="form-group half">
+            <label>CEP</label>
+            <input formControlName="zipCode" type="text" placeholder="CEP" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group half">
+            <label>Cidade</label>
+            <input formControlName="city" type="text" placeholder="Cidade" />
+          </div>
+          <div class="form-group half">
+            <label>Estado</label>
+            <input formControlName="state" type="text" placeholder="Estado" />
+          </div>
         </div>
       </form>
     </section>
@@ -91,32 +120,60 @@
       <form [formGroup]="formulario" (ngSubmit)="salvarDados()">
         <div class="form-group">
           <label>Nome</label>
-          <input formControlName="nome" type="text" />
+          <input formControlName="fullName" type="text" />
         </div>
         <div class="form-group">
           <label>UserName</label>
           <input formControlName="userName" type="text" />
         </div>
         <div class="form-group">
-          <label>Email</label>
-          <input formControlName="email" type="email" />
-        </div>
-        <div class="form-group">
           <label>Telefone</label>
-          <input formControlName="telefone" type="text" />
+          <div class="telefone-container">
+            <input type="text" formControlName="areaCode" placeholder="DDD" class="ddd-input" />
+            <input type="text" formControlName="phoneNumber" placeholder="Número" class="telefone-input" />
+          </div>
         </div>
         <div class="form-group">
           <label>CNPJ</label>
-          <input formControlName="documento" type="text" />
+          <input formControlName="cnpj" type="text" />
         </div>
+
         <div class="form-group">
-          <label>Data de nascimento</label>
-          <input formControlName="nascimento" type="text" />
+          <label>Rua</label>
+          <input formControlName="street" type="text" placeholder="Rua" />
         </div>
-        <div class="form-group">
-          <label>Endereço</label>
-          <input formControlName="endereco" type="text" />
+
+        <div class="form-row">
+          <div class="form-group half">
+            <label>Número</label>
+            <input formControlName="number" type="text" placeholder="Número" />
+          </div>
+          <div class="form-group half">
+            <label>Complemento</label>
+            <input formControlName="complement" type="text" placeholder="Complemento" />
+          </div>
         </div>
+        <div class="form-row">
+          <div class="form-group half">
+            <label>Bairro</label>
+            <input formControlName="neighborhood" type="text" placeholder="Bairro" />
+          </div>
+          <div class="form-group half">
+            <label>CEP</label>
+            <input formControlName="zipCode" type="text" placeholder="CEP" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group half">
+            <label>Cidade</label>
+            <input formControlName="city" type="text" placeholder="Cidade" />
+          </div>
+          <div class="form-group half">
+            <label>Estado</label>
+            <input formControlName="state" type="text" placeholder="Estado" />
+          </div>
+        </div>
+
         <button class="btn-salvar" type="submit">Salvar</button>
       </form>
     </section>

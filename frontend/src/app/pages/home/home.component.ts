@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -70,7 +69,7 @@ export class HomeComponent {
   }
 
   irParaDetalhes() {
-  
+
   this.router.navigate(['/eventpage']);
 }
   verTodosEventos() {

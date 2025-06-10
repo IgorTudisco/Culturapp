@@ -1,7 +1,5 @@
-
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Culturapp.Models.Enum;
 
 namespace Culturapp.Models;
 

@@ -1,5 +1,6 @@
 using Culturapp.Models;
 using Culturapp.Models.Requests;
+using Culturapp.Models.Responses;
 using Culturapp.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -30,6 +31,13 @@ namespace Culturapp.Controllers
       }
 
       return Ok(address);
+    }
+
+    [HttpGet("GetAllAddresses")]
+    public async Task<ActionResult<List<AddressResponse>>> GetAllAddresses()
+    {
+      var addresses = await _addressService.GetAllAddressesAsync();
+      return Ok(addresses);
     }
 
     [HttpPost("PostAddress")]

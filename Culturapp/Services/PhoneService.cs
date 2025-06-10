@@ -2,7 +2,6 @@ using AutoMapper;
 using Culturapp.Data;
 using Culturapp.Models;
 using Culturapp.Models.Requests;
-using Microsoft.EntityFrameworkCore;
 
 namespace Culturapp.Services
 {
@@ -16,7 +15,7 @@ namespace Culturapp.Services
       _context = context;
       _mapper = mapper;
     }
-    
+
     public async Task<Phone?> GetPhoneByIdAsync(int id)
     {
       return await _context.Phones.FindAsync(id);
