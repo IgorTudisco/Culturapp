@@ -30,8 +30,7 @@ export class LoginComponent {
     var credenciais = this.loginForm.value;
 
     this.authService.login(credenciais).subscribe(() => {
-      //this.router.navigate(['/eventpage']);
-      this.router.navigate(['/faq']);
+      this.router.navigate(['/home']);
     });
   }
 }

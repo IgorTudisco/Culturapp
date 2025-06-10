@@ -43,7 +43,7 @@ export class AuthService {
     this.router.navigate(['/home']);
   }
 
-  estaLogado(): boolean {
+  isLoggedIn(): boolean {
     return !!localStorage.getItem('token');
   }
 }
