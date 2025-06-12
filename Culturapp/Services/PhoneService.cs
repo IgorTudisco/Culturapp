@@ -23,7 +23,7 @@ namespace Culturapp.Services
       return await _context.Phones.FindAsync(id);
     }
 
-    public async Task<int?> GetPhoneByNumberAsync(string number)
+    public async Task<int?> GetPhoneIdByNumberAsync(string number)
     {
       var phone = await _context.Phones
         .Where(p => p.PhoneNumber == number)
@@ -34,7 +34,7 @@ namespace Culturapp.Services
 
     public async Task<PhoneResponse?> AddPhoneAsync(PhoneRequest phoneRequest)
     {
-      var existPhone = await GetPhoneByNumberAsync(phoneRequest.PhoneNumber!);
+      var existPhone = await GetPhoneIdByNumberAsync(phoneRequest.PhoneNumber!);
       if (existPhone.HasValue)
       {
         return null;

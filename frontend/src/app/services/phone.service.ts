@@ -27,8 +27,8 @@ export class PhoneService {
     );
   }
 
-  getPhoneByNumber(phoneNumber: string): Observable<number> {
-    return this.http.get<number>(`${this.apiUrl}/GetPhoneByNumber/${phoneNumber}`, {
+  getPhoneIdByNumber(phoneNumber: string): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/GetPhoneIdByNumber/${phoneNumber}`, {
       headers: this.headers
     }).pipe(
       map((res: number) => {

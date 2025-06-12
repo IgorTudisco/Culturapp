@@ -67,4 +67,14 @@ export class AddressService {
     });
   }
 
+  getAddressIdByZipCode(zipCode: string): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/GetAddressIdByZipCode/${zipCode}`, {
+      headers: this.headers
+    }).pipe(
+      map((res: number) => {
+        return res || 0;
+      })
+    );
+  }
+
 }

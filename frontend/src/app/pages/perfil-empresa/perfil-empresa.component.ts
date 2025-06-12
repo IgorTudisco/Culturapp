@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
 import { EnterpriseUserResponse } from '../../models/enterprise-user-response.model';
 import { AuthService } from '../../services/auth.service';
+import { AddressRequest } from '../../models/address-request.model';
 @Component({
   standalone: true,
   selector: 'app-perfil-empresa',
@@ -27,6 +28,7 @@ export class PerfilEmpresaComponent implements OnInit {
   UpdateEmpresa?: EnterpriseUserRequest;
 
   phoneEmpresa?: PhoneRequest;
+  addressEmpresa?: AddressRequest
 
   constructor(
     private fb: FormBuilder,
@@ -44,7 +46,7 @@ export class PerfilEmpresaComponent implements OnInit {
       phoneNumber: [this.empresa?.phones?.[0]?.phoneNumber],
       cnpj: [this.empresa?.cnpj],
       street: [this.empresa?.address?.street],
-      number: [this.empresa?.address?.number],
+      addressNumber: [this.empresa?.address?.addressNumber],
       complement: [this.empresa?.address?.complement],
       neighborhood: [this.empresa?.address?.neighborhood],
       zipCode: [this.empresa?.address?.zipCode],
@@ -75,7 +77,7 @@ export class PerfilEmpresaComponent implements OnInit {
           phoneNumber: empresa.phones?.[0]?.phoneNumber,
           cnpj: empresa.cnpj,
           street: empresa.address?.street,
-          number: empresa.address?.number,
+          addressNumber: empresa.address?.addressNumber,
           neighborhood: empresa.address?.neighborhood,
           complement: empresa.address?.complement,
           city: empresa.address?.city,
@@ -111,7 +113,7 @@ export class PerfilEmpresaComponent implements OnInit {
         }
       });
 
-      this.phoneService.getPhoneByNumber(
+      this.phoneService.getPhoneIdByNumber(
         this.formularioUpdate.value.phoneNumber
       ).subscribe({
         next: (phoneId) => {
@@ -119,6 +121,36 @@ export class PerfilEmpresaComponent implements OnInit {
         },
         error: (error) => {
           console.error('Erro ao buscar telefone:', error);
+        }
+      });
+
+      this.addressEmpresa = {
+        street: this.formularioUpdate.value.street,
+        addressNumber: this.formularioUpdate.value.number,
+        complement: this.formularioUpdate.value.complement,
+        neighborhood: this.formularioUpdate.value.neighborhood,
+        city: this.formularioUpdate.value.city,
+        state: this.formularioUpdate.value.state,
+        zipCode: this.formularioUpdate.value.zipCode,
+      };
+
+      this.addressService.createAddress(this.addressEmpresa).subscribe({
+        next: (address) => {
+          console.log('Endereço criado:', address);
+        },
+        error: (error) => {
+          console.error('Erro ao criar endereço:', error);
+        }
+      });
+
+      this.addressService.getAddressIdByZipCode(
+        this.formularioUpdate.value.zipCode
+      ).subscribe({
+        next: (addressId) => {
+          this.UpdateEmpresa!.addressId = addressId;
+        },
+        error: (error) => {
+          console.error('Erro ao buscar endereço:', error);
         }
       });
 

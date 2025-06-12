@@ -78,6 +78,7 @@ namespace Culturapp.Services
       existingEnterpriseUser.FullName = enterpriseUserRequest.FullName;
       existingEnterpriseUser.CNPJ = enterpriseUserRequest.CNPJ;
       existingEnterpriseUser.AddressId = enterpriseUserRequest.AddressId;
+      existingEnterpriseUser.Address = await _context.Addresses.FindAsync(enterpriseUserRequest.AddressId);
 
       var phone = await _context.Phones.FindAsync(enterpriseUserRequest.PhoneId);
       if (phone != null)

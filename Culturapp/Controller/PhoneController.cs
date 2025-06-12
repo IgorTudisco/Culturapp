@@ -70,15 +70,15 @@ namespace Culturapp.Controllers
             return NoContent();
         }
 
-        [HttpGet("GetPhoneByNumber/{phoneNumber}")]
-        public async Task<ActionResult<int?>> GetPhoneByNumber(string phoneNumber)
+        [HttpGet("GetPhoneIdByNumber/{phoneNumber}")]
+        public async Task<ActionResult<int?>> GetPhoneIdByNumber(string phoneNumber)
         {
             if (string.IsNullOrEmpty(phoneNumber))
             {
                 return BadRequest("Phone number cannot be null or empty.");
             }
 
-            var phoneId = await _phoneService.GetPhoneByNumberAsync(phoneNumber);
+            var phoneId = await _phoneService.GetPhoneIdByNumberAsync(phoneNumber);
             if (phoneId == null)
             {
                 return NotFound();
