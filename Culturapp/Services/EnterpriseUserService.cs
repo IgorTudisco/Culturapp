@@ -21,21 +21,21 @@ namespace Culturapp.Services
 
     public async Task<List<EnterpriseUserResponse>> GetEnterpriseUsersAsync()
     {
-      var enterpriseList = await _context.EnterpriseUsers.ToListAsync();
+      var enterpriseList = await _context.EnterpriseUsers.Include(e => e.Phones).Include(e => e.Address).Include(e => e.Events).ToListAsync();
       var enterpriseUserResponseList = _mapper.Map<List<EnterpriseUserResponse>>(enterpriseList);
       return enterpriseUserResponseList;
     }
 
     public async Task<EnterpriseUserResponse?> GetEnterpriseUserByIdAsync(int id)
     {
-      var enterpriseUser = await _context.EnterpriseUsers.FindAsync(id);
+      var enterpriseUser = await _context.EnterpriseUsers.Include(e => e.Phones).Include(e => e.Address).Include(e => e.Events).FirstOrDefaultAsync(e => e.Id == id);
       var enterpriseUserResponse = _mapper.Map<EnterpriseUserResponse>(enterpriseUser);
       return enterpriseUserResponse;
     }
 
     public async Task<EnterpriseUserResponse?> GetEnterpriseUserEmailAsync(string email)
     {
-      var enterpriseUser = await _context.EnterpriseUsers.Include(e => e.Phones).Include(e => e.Address).FirstOrDefaultAsync(e => e.Email == email);
+      var enterpriseUser = await _context.EnterpriseUsers.Include(e => e.Phones).Include(e => e.Address).Include(e => e.Events).FirstOrDefaultAsync(e => e.Email == email);
       var enterpriseUserResponse = _mapper.Map<EnterpriseUserResponse>(enterpriseUser);
       return enterpriseUserResponse;
     }
@@ -68,6 +68,8 @@ namespace Culturapp.Services
     {
       var existingEnterpriseUser = await _context.EnterpriseUsers
         .Include(e => e.Phones)
+        .Include(e => e.Address)
+        .Include(e => e.Events)
         .FirstOrDefaultAsync(e => e.Id == id);
       if (existingEnterpriseUser == null)
         return null;
