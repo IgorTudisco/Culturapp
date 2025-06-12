@@ -2,6 +2,8 @@ using AutoMapper;
 using Culturapp.Data;
 using Culturapp.Models;
 using Culturapp.Models.Requests;
+using Culturapp.Models.Responses;
+using Microsoft.EntityFrameworkCore;
 
 namespace Culturapp.Services
 {
@@ -21,11 +23,27 @@ namespace Culturapp.Services
       return await _context.Phones.FindAsync(id);
     }
 
-    public async Task AddPhoneAsync(PhoneRequest phoneRequest)
+    public async Task<int?> GetPhoneByNumberAsync(string number)
     {
+      var phone = await _context.Phones
+        .Where(p => p.PhoneNumber == number)
+        .FirstOrDefaultAsync();
+
+      return phone == null ? null : phone.Id;
+    }
+
+    public async Task<PhoneResponse?> AddPhoneAsync(PhoneRequest phoneRequest)
+    {
+      var existPhone = await GetPhoneByNumberAsync(phoneRequest.PhoneNumber!);
+      if (existPhone.HasValue)
+      {
+        return null;
+      }
       var phone = _mapper.Map<Phone>(phoneRequest);
       _context.Phones.Add(phone);
       await _context.SaveChangesAsync();
+      var phoneResponse = _mapper.Map<PhoneResponse>(phone);
+      return phoneResponse;
     }
 
     public async Task<Phone?> UpdatePhoneAsync(int id, PhoneRequest phoneRequest)

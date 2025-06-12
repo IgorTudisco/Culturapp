@@ -1,3 +1,6 @@
+import { AddressService } from './../../services/address.service';
+import { PhoneService } from './../../services/phone.service';
+import { PhoneRequest } from './../../models/phone-request.model';
 import { EnterpriseUserRequest } from './../../models/enterprise-user-request.model';
 import { EnterpriseUserService } from './../../services/enterprise-user.service';
 import { Component, OnInit } from '@angular/core';
@@ -23,11 +26,15 @@ export class PerfilEmpresaComponent implements OnInit {
   empresa?: EnterpriseUserResponse;
   UpdateEmpresa?: EnterpriseUserRequest;
 
+  phoneEmpresa?: PhoneRequest;
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private enterpriseUserService: EnterpriseUserService,
-    private authService: AuthService
+    private authService: AuthService,
+    private phoneService: PhoneService,
+    private addressService: AddressService
   ) {
     this.formulario = this.fb.group({
       userName: [this.empresa?.userName],
@@ -89,10 +96,36 @@ export class PerfilEmpresaComponent implements OnInit {
       console.log('Dados salvos:', this.formularioUpdate.value);
 
       this.UpdateEmpresa = this.formularioUpdate.value;
-      var id = Number(localStorage.getItem('userId'));
+
+      this.phoneEmpresa = {
+        areaCode: this.formularioUpdate.value.areaCode,
+        phoneNumber: this.formularioUpdate.value.phoneNumber,
+      };
+
+      this.phoneService.createPhone(this.phoneEmpresa).subscribe({
+        next: (phone) => {
+          console.log('Telefone criado:', phone);
+        },
+        error: (error) => {
+          console.error('Erro ao criar telefone:', error);
+        }
+      });
+
+      this.phoneService.getPhoneByNumber(
+        this.formularioUpdate.value.phoneNumber
+      ).subscribe({
+        next: (phoneId) => {
+          this.UpdateEmpresa!.phoneId = phoneId;
+        },
+        error: (error) => {
+          console.error('Erro ao buscar telefone:', error);
+        }
+      });
+
+      var EmpresaId = Number(localStorage.getItem('userId'));
 
       this.enterpriseUserService
-        .updateEnterpriseUser(id, this.UpdateEmpresa!)
+        .updateEnterpriseUser(EmpresaId, this.UpdateEmpresa!)
         .subscribe({
           next: () => {
             alert('Dados atualizados com sucesso!');
