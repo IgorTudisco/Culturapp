@@ -1,3 +1,6 @@
+import { AddressService } from './../../services/address.service';
+import { PhoneService } from './../../services/phone.service';
+import { PhoneRequest } from './../../models/phone-request.model';
 import { EnterpriseUserRequest } from './../../models/enterprise-user-request.model';
 import { EnterpriseUserService } from './../../services/enterprise-user.service';
 import { Component, OnInit } from '@angular/core';
@@ -7,6 +10,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
 import { EnterpriseUserResponse } from '../../models/enterprise-user-response.model';
+import { AuthService } from '../../services/auth.service';
+import { AddressRequest } from '../../models/address-request.model';
 @Component({
   standalone: true,
   selector: 'app-perfil-empresa',
@@ -22,10 +27,16 @@ export class PerfilEmpresaComponent implements OnInit {
   empresa?: EnterpriseUserResponse;
   UpdateEmpresa?: EnterpriseUserRequest;
 
+  phoneEmpresa?: PhoneRequest;
+  addressEmpresa?: AddressRequest
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private enterpriseUserService: EnterpriseUserService
+    private enterpriseUserService: EnterpriseUserService,
+    private authService: AuthService,
+    private phoneService: PhoneService,
+    private addressService: AddressService
   ) {
     this.formulario = this.fb.group({
       userName: [this.empresa?.userName],
@@ -35,7 +46,7 @@ export class PerfilEmpresaComponent implements OnInit {
       phoneNumber: [this.empresa?.phones?.[0]?.phoneNumber],
       cnpj: [this.empresa?.cnpj],
       street: [this.empresa?.address?.street],
-      number: [this.empresa?.address?.number],
+      addressNumber: [this.empresa?.address?.addressNumber],
       complement: [this.empresa?.address?.complement],
       neighborhood: [this.empresa?.address?.neighborhood],
       zipCode: [this.empresa?.address?.zipCode],
@@ -47,11 +58,9 @@ export class PerfilEmpresaComponent implements OnInit {
 
   ngOnInit(): void {
     const empresaId = localStorage.getItem('userId');
-    console.log('ID da empresa logada: ' + empresaId);
     if (!empresaId) {
       this.router.navigate(['/home']);
     } else {
-      console.log('ID da empresa logada: ' + empresaId);
       this.getEnterpriseLogado(Number(empresaId));
     }
   }
@@ -68,7 +77,7 @@ export class PerfilEmpresaComponent implements OnInit {
           phoneNumber: empresa.phones?.[0]?.phoneNumber,
           cnpj: empresa.cnpj,
           street: empresa.address?.street,
-          number: empresa.address?.number,
+          addressNumber: empresa.address?.addressNumber,
           neighborhood: empresa.address?.neighborhood,
           complement: empresa.address?.complement,
           city: empresa.address?.city,
@@ -89,10 +98,66 @@ export class PerfilEmpresaComponent implements OnInit {
       console.log('Dados salvos:', this.formularioUpdate.value);
 
       this.UpdateEmpresa = this.formularioUpdate.value;
-      var id = Number(localStorage.getItem('userId'));
+
+      this.phoneEmpresa = {
+        areaCode: this.formularioUpdate.value.areaCode,
+        phoneNumber: this.formularioUpdate.value.phoneNumber,
+      };
+
+      this.phoneService.createPhone(this.phoneEmpresa).subscribe({
+        next: (phone) => {
+          console.log('Telefone criado:', phone);
+        },
+        error: (error) => {
+          console.error('Erro ao criar telefone:', error);
+        }
+      });
+
+      this.phoneService.getPhoneIdByNumber(
+        this.formularioUpdate.value.phoneNumber
+      ).subscribe({
+        next: (phoneId) => {
+          this.UpdateEmpresa!.phoneId = phoneId;
+        },
+        error: (error) => {
+          console.error('Erro ao buscar telefone:', error);
+        }
+      });
+
+      this.addressEmpresa = {
+        street: this.formularioUpdate.value.street,
+        addressNumber: this.formularioUpdate.value.addressNumber,
+        complement: this.formularioUpdate.value.complement,
+        neighborhood: this.formularioUpdate.value.neighborhood,
+        city: this.formularioUpdate.value.city,
+        state: this.formularioUpdate.value.state,
+        zipCode: this.formularioUpdate.value.zipCode,
+      };
+
+      this.addressService.createAddress(this.addressEmpresa).subscribe({
+        next: (address) => {
+          console.log('Endereço criado:', address);
+        },
+        error: (error) => {
+          console.error('Erro ao criar endereço:', error);
+        }
+      });
+
+      this.addressService.getAddressIdByZipCode(
+        this.formularioUpdate.value.zipCode
+      ).subscribe({
+        next: (addressId) => {
+          this.UpdateEmpresa!.addressId = addressId;
+        },
+        error: (error) => {
+          console.error('Erro ao buscar endereço:', error);
+        }
+      });
+
+      var EmpresaId = Number(localStorage.getItem('userId'));
 
       this.enterpriseUserService
-        .updateEnterpriseUser(id, this.UpdateEmpresa!)
+        .updateEnterpriseUser(EmpresaId, this.UpdateEmpresa!)
         .subscribe({
           next: () => {
             alert('Dados atualizados com sucesso!');
@@ -107,6 +172,24 @@ export class PerfilEmpresaComponent implements OnInit {
 
   editarEvento(id: number) {
     this.router.navigate(['/editar-evento'], { queryParams: { id } });
+  }
+
+  seeProfile() {
+    const accountType = localStorage.getItem('accountType');
+    if (accountType === 'ClientUser') {
+      this.router.navigate(['/perfil-usuario']);
+    } else {
+      this.router.navigate(['/perfil-empresa']);
+    }
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/home']);
+  }
+
+  checkIfLoggedIn(): boolean {
+    return this.authService.isLoggedIn();
   }
 
   eventos = [

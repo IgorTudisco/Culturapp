@@ -69,5 +69,23 @@ namespace Culturapp.Controllers
             await _phoneService.DeletePhoneAsync(id);
             return NoContent();
         }
+
+        [HttpGet("GetPhoneIdByNumber/{phoneNumber}")]
+        public async Task<ActionResult<int?>> GetPhoneIdByNumber(string phoneNumber)
+        {
+            if (string.IsNullOrEmpty(phoneNumber))
+            {
+                return BadRequest("Phone number cannot be null or empty.");
+            }
+
+            var phoneId = await _phoneService.GetPhoneIdByNumberAsync(phoneNumber);
+            if (phoneId == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(phoneId);
+
+        }
     }
 }

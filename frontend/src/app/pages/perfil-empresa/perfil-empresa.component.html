@@ -16,7 +16,7 @@
   </div>
 
   <div class="right">
-    <button class="profile-btn">Perfil</button>
+    <button class="profile-btn" (click)="logout()">Logout</button>
   </div>
 </header>
 
@@ -85,7 +85,7 @@
         <div class="form-row">
           <div class="form-group half">
             <label>Número</label>
-            <input formControlName="number" type="text" placeholder="Número" />
+            <input formControlName="addressNumber" type="text" placeholder="Número" />
           </div>
           <div class="form-group half">
             <label>Complemento</label>
@@ -146,7 +146,7 @@
         <div class="form-row">
           <div class="form-group half">
             <label>Número</label>
-            <input formControlName="number" type="text" placeholder="Número" />
+            <input formControlName="addressNumber" type="text" placeholder="Número" />
           </div>
           <div class="form-group half">
             <label>Complemento</label>

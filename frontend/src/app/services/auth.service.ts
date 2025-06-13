@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { RegisterRequest } from '../models/register-request.model';
+import { LoginResponse } from '../models/login-response.model';
+import { LoginRequest } from '../models/login-request.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,19 +25,21 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/register`, dados);
   }
 
-  login(dados: any): Observable<any> {
-    console.log(dados);
-    debugger;
-    return this.http.post(`${this.apiUrl}/login`, dados).pipe(
-      map((res: any) => {
-        localStorage.setItem('token', res.token);
-        localStorage.setItem('userId', res.userId);
-        localStorage.setItem('userName', res.userName);
-        localStorage.setItem('email', res.email);
-        localStorage.setItem('accountType', res.accountType);
-        this.router.navigate(['/home']);
+  login(dados: LoginRequest): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(`${this.apiUrl}/login`, dados).pipe(
+      map((res: LoginResponse) => {
+        this.setValue(res);
+        return res;
       })
     );
+  }
+
+  setValue(res: LoginResponse | null): void {
+    localStorage.setItem('token', res!.token || '');
+    localStorage.setItem('userId', res!.userId?.toString() || '');
+    localStorage.setItem('userName', res!.userName || '');
+    localStorage.setItem('email', res!.email || '');
+    localStorage.setItem('accountType', res!.accountType || '');
   }
 
   logout() {
@@ -43,7 +47,14 @@ export class AuthService {
     this.router.navigate(['/home']);
   }
 
-  estaLogado(): boolean {
+  isLoggedIn(): boolean {
     return !!localStorage.getItem('token');
   }
+  getToken(): string | null {
+    return localStorage.getItem('token');
+  }
+  getAccountType(): string | null {
+    return localStorage.getItem('accountType');
+  }
+
 }

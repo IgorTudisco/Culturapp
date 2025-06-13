@@ -77,5 +77,23 @@ namespace Culturapp.Controllers
       await _addressService.DeleteAddressAsync(id);
       return NoContent();
     }
+
+    [HttpGet("GetAddressIdByZipCode/{zipCode}")]
+    public async Task<ActionResult<int>> GetAddressIdByZipCode(string zipCode)
+    {
+      if (string.IsNullOrEmpty(zipCode))
+      {
+        return BadRequest("Zip code cannot be null or empty.");
+      }
+
+      var addressId = await _addressService.GetAddressIdByZipCodeAsync(zipCode);
+      if (addressId == null)
+      {
+        return NotFound();
+      }
+
+      return Ok(addressId);
+    }
+
   }
 }

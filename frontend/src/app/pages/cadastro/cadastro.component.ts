@@ -38,7 +38,7 @@ export class CadastroComponent implements OnInit {
       cpf: ['', [Validators.minLength(11), Validators.maxLength(11)]],
       cnpj: ['', [Validators.minLength(14), Validators.maxLength(14)]],
 
-      accountType: [AccountType.ClientUser, Validators.required]
+      accountType: [AccountType.clientUser, Validators.required]
     }, {
       validators: this.passwordMatchValidator
     });
@@ -47,7 +47,7 @@ export class CadastroComponent implements OnInit {
       const cnpjControl = this.cadastroForm.get('cnpj');
       const cpfControl = this.cadastroForm.get('cpf');
 
-      if (value == AccountType.EnterpriseUser) {
+      if (value == AccountType.enterpriseUser) {
         cnpjControl?.setValidators([Validators.required, Validators.minLength(14), Validators.maxLength(14)]);
         cpfControl?.clearValidators();
         cpfControl?.setValue('');
@@ -81,7 +81,7 @@ export class CadastroComponent implements OnInit {
   }
 
   cadastrar(): void {
-    
+
     this.senhaInvalida = this.cadastroForm.errors?.['passwordMismatch'];
 
     if (this.cadastroForm.valid) {
@@ -92,8 +92,8 @@ export class CadastroComponent implements OnInit {
         password: this.cadastroForm.get('password')?.value,
         accountType: Number(this.cadastroForm.get('accountType')?.value),
 
-        cpf: this.cadastroForm.get('accountType')?.value == AccountType.ClientUser ? this.cadastroForm.get('cpf')?.value : null,
-        cnpj: this.cadastroForm.get('accountType')?.value == AccountType.EnterpriseUser ? this.cadastroForm.get('cnpj')?.value : null,
+        cpf: this.cadastroForm.get('accountType')?.value == AccountType.clientUser ? this.cadastroForm.get('cpf')?.value : null,
+        cnpj: this.cadastroForm.get('accountType')?.value == AccountType.enterpriseUser ? this.cadastroForm.get('cnpj')?.value : null,
       };
 
       this.authService.cadastrar(registerData).subscribe({

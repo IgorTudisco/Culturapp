@@ -5,17 +5,30 @@
       <img src="./assets/img/logo.png" alt="logo CulturApp" />
       <span>CulturApp</span>
     </div>
+
     <ul class="nav-links">
-      <li><a routerLink="/home" class="nav-active">Home</a></li>
-      <li><a href="/eventpage" routerLink="/eventpage">Eventos</a></li>
-      <li><a href="/faq" routerLink="/faq">FAQ</a></li>
-      <li><a href="/sobre" routerLink="/sobre">Sobre</a></li>
+      <li><a routerLink="/home" routerLinkActive="nav-active">Home</a></li>
+      <li><a routerLink="/eventpage" routerLinkActive="nav-active">Eventos</a></li>
+      <li><a routerLink="/faq" routerLinkActive="nav-active">FAQ</a></li>
+      <li><a routerLink="/sobre" routerLinkActive="nav-active">Sobre</a></li>
     </ul>
+
+    <!-- Botões de autenticação -->
     <div class="auth-buttons">
-      <button class="signup" (click)="verCadastro()">Cadastro</button>
-      <button class="login" (click)="verLogin()">Login</button>
+      <!-- Quando NÃO está logado -->
+      <ng-container *ngIf="!checkIfLoggedIn(); else loggedInBlock">
+        <button class="signup" (click)="verCadastro()">Cadastro</button>
+        <button class="login" (click)="verLogin()">Login</button>
+      </ng-container>
+
+      <!-- Quando está logado -->
+      <ng-template #loggedInBlock>
+        <button class="signup" (click)="seeProfile()">Perfil</button>
+        <button class="login" (click)="logout()">Logout</button>
+      </ng-template>
     </div>
   </nav>
+
   <div class="banner-content">
     <div class="banner-text">
       <h1>Seu próximo evento inesquecível começa aqui.</h1>
@@ -25,11 +38,7 @@
 
 <!-- Filtro -->
 <section class="filtros">
-  <input
-    type="text"
-    placeholder="Pesquisar artista ou evento"
-    [(ngModel)]="termoPesquisa"
-  />
+  <input type="text" placeholder="Pesquisar artista ou evento" [(ngModel)]="termoPesquisa" />
   <select [(ngModel)]="categoriaSelecionada">
     <option>Todas categorias</option>
     <option>Show</option>

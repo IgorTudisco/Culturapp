@@ -1,5 +1,4 @@
-export interface AddressResponse {
-  id: number;
+export interface AddressRequest {
   street?: string;
   addressNumber?: string;
   neighborhood?: string;
@@ -7,6 +6,6 @@ export interface AddressResponse {
   city?: string;
   state?: string;
   zipCode?: string;
-  enterpriseUserId?: number;
+  companyId?: number;
   eventId?: number;
 }

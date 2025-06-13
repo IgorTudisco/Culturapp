@@ -3,20 +3,32 @@
     <img src="./assets/img/logo.png" alt="logo CulturApp" />
     <span>CulturApp</span>
   </div>
+
   <nav class="nav">
-    <a href="/home">Home</a>
-    <a href="/eventos" class="eventos-active">Eventos</a>
-    <a href="/faq">FAQ</a>
-    <a href="/sobre">Sobre</a>
+    <a routerLink="/home" routerLinkActive="nav-active">Home</a>
+    <a routerLink="/eventos" routerLinkActive="nav-active">Eventos</a>
+    <a routerLink="/faq" routerLinkActive="nav-active">FAQ</a>
+    <a routerLink="/sobre" routerLinkActive="nav-active">Sobre</a>
   </nav>
+
   <div class="auth-buttons">
-   <button class="signup" (click)="verCadastro()">Cadastro</button>
-      <button class="login" (click)="verLogin()">Login</button>
+    <ng-container *ngIf="!checkIfLoggedIn(); else logado">
+      <button class="signup" (click)="goToCadastro()">Cadastro</button>
+      <button class="login" (click)="goToLogin()">Login</button>
+    </ng-container>
+
+    <ng-template #logado>
+      <button class="signup" (click)="seeProfile()">Perfil</button>
+      <button class="login" (click)="logout()">Logout</button>
+    </ng-template>
   </div>
 </div>
 
+
+
 <div class="event-banner">
-  <img src="https://cdn.getcrowder.com/images/a39c69d6-08c2-4f06-b3f1-47f1e1cfde2c-linkinpark2025landing1920x720.gif" alt="Linkin Park World Tour">
+  <img src="https://cdn.getcrowder.com/images/a39c69d6-08c2-4f06-b3f1-47f1e1cfde2c-linkinpark2025landing1920x720.gif"
+    alt="Linkin Park World Tour">
 </div>
 
 <div class="event-container">
@@ -46,8 +58,10 @@
         <div class="event-description">
           <h4>Description</h4>
           <p>
-            A turnê mundial que está revolucionando o rock moderno. Linkin Park apresenta seu mais novo álbum "From Zero"
-            em uma experiência audiovisual espetacular. Prepare-se para reviver os clássicos e descobrir as novas músicas
+            A turnê mundial que está revolucionando o rock moderno. Linkin Park apresenta seu mais novo álbum "From
+            Zero"
+            em uma experiência audiovisual espetacular. Prepare-se para reviver os clássicos e descobrir as novas
+            músicas
             em um show que promete ser inesquecível.
           </p>
         </div>
@@ -56,7 +70,8 @@
           <h4>Galeria do Artista</h4>
           <div class="gallery-grid">
             <img src="https://images.unsplash.com/photo-1468234847176-28606331216a?q=80&w=1000" alt="Linkin Park Show">
-            <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1000" alt="Linkin Park Performance">
+            <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1000"
+              alt="Linkin Park Performance">
             <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?q=80&w=1000" alt="Concert Crowd">
           </div>
         </div>

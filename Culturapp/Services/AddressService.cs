@@ -32,11 +32,33 @@ namespace Culturapp.Services
       return addressResponses;
     }
 
-    public async Task CreateAddressAsync(AddressRequest addressRequest)
+    public async Task<int?> GetAddressIdByZipCodeAsync(string zipCode)
     {
+      var address = await _context.Addresses.FirstOrDefaultAsync(a => a.ZipCode == zipCode);
+      return address?.Id;
+    }
+
+    public async Task<AddressResponse?> CreateAddressAsync(AddressRequest addressRequest)
+    {
+      var existingAddress = await _context.Addresses.FirstOrDefaultAsync(
+        a =>
+        a.ZipCode == addressRequest.ZipCode &&
+        a.Street == addressRequest.Street &&
+        a.AddressNumber == addressRequest.AddressNumber &&
+        a.Complement == addressRequest.Complement &&
+        a.Neighborhood == addressRequest.Neighborhood &&
+        a.City == addressRequest.City &&
+        a.State == addressRequest.State
+      );
+      if (existingAddress != null)
+      {
+        return null;
+      }
       var address = _mapper.Map<Address>(addressRequest);
       _context.Addresses.Add(address);
       await _context.SaveChangesAsync();
+      var addressResponse = _mapper.Map<AddressResponse>(address);
+      return addressResponse;
     }
 
     public async Task<AddressResponse?> UpdateAddressAsync(int id, AddressRequest? addressRequest)
