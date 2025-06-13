@@ -28,8 +28,12 @@ namespace Culturapp.Services
 
     public async Task<EnterpriseUserResponse?> GetEnterpriseUserByIdAsync(int id)
     {
-      var enterpriseUser = await _context.EnterpriseUsers.Include(e => e.Phones.OrderBy(p => p!.Id)).Include(e => e.Address).Include(e => e.Events).FirstOrDefaultAsync(e => e.Id == id);
+      var enterpriseUser = await _context.EnterpriseUsers.Include(e => e.Phones).Include(e => e.Address).Include(e => e.Events).FirstOrDefaultAsync(e => e.Id == id);
       var enterpriseUserResponse = _mapper.Map<EnterpriseUserResponse>(enterpriseUser);
+      if (enterpriseUserResponse != null && enterpriseUserResponse.Phones != null)
+      {
+          enterpriseUserResponse.Phones = enterpriseUserResponse.Phones.OrderBy(p => p.Id).ToList();
+      }
       return enterpriseUserResponse;
     }
 
