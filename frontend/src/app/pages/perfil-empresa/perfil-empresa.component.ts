@@ -126,7 +126,7 @@ export class PerfilEmpresaComponent implements OnInit {
 
       this.addressEmpresa = {
         street: this.formularioUpdate.value.street,
-        addressNumber: this.formularioUpdate.value.number,
+        addressNumber: this.formularioUpdate.value.addressNumber,
         complement: this.formularioUpdate.value.complement,
         neighborhood: this.formularioUpdate.value.neighborhood,
         city: this.formularioUpdate.value.city,
@@ -185,7 +185,7 @@ export class PerfilEmpresaComponent implements OnInit {
 
   logout() {
     this.authService.logout();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/home']);
   }
 
   checkIfLoggedIn(): boolean {

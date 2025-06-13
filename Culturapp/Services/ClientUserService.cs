@@ -65,6 +65,8 @@ namespace Culturapp.Services
     public async Task<ClientUserResponse?> UpdateClientUserAsync(int id, ClientUserRequest clientUserRequest)
     {
       var existing = await _context.ClientUsers
+        .Include(c => c.Phone)
+        .Include(c => c.Address)
         .Include(c => c.Events)
         .Include(c => c.Checks)
         .FirstOrDefaultAsync(c => c.Id == id);
@@ -74,11 +76,12 @@ namespace Culturapp.Services
       existing.FullName = clientUserRequest.FullName;
       existing.UserName = clientUserRequest.UserName;
       existing.CPF = clientUserRequest.CPF;
-      existing.Phone = clientUserRequest.PhoneId != null
-        ? await _context.Phones.FindAsync(clientUserRequest.PhoneId)
-        : null;
 
-      existing.Address = await _context.Addresses.FindAsync(clientUserRequest.AddressId);
+      if (clientUserRequest.PhoneId != null)
+        existing.Phone = await _context.Phones.FindAsync(clientUserRequest.PhoneId);
+
+      if (clientUserRequest.AddressId != null)
+        existing.Address = await _context.Addresses.FindAsync(clientUserRequest.AddressId);
 
       if (clientUserRequest.EventId != null &&
           !existing.Events!.Any(e => e!.Id == clientUserRequest.EventId))

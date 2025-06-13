@@ -29,13 +29,13 @@ namespace Culturapp.Services
         .Where(p => p.PhoneNumber == number)
         .FirstOrDefaultAsync();
 
-      return phone == null ? null : phone.Id;
+      return phone!.Id;
     }
 
     public async Task<PhoneResponse?> AddPhoneAsync(PhoneRequest phoneRequest)
     {
-      var existPhone = await GetPhoneIdByNumberAsync(phoneRequest.PhoneNumber!);
-      if (existPhone.HasValue)
+      var existPhone = await _context.Phones.FirstOrDefaultAsync(p => p.PhoneNumber == phoneRequest.PhoneNumber);
+      if (existPhone != null)
       {
         return null;
       }

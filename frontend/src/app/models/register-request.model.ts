@@ -1,6 +1,6 @@
 export enum AccountType {
-  ClientUser = 0,
-  EnterpriseUser = 1
+  clientUser = 0,
+  enterpriseUser = 1
 }
 
 export class RegisterRequest {

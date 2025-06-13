@@ -49,8 +49,6 @@ namespace Culturapp.Services
 
       var user = _mapper.Map<ApplicationUser>(registerRequest);
 
-      var createUser = new IdentityUser();
-
       var userClient = new ClientUserResponse();
       var userEnterprise = new EnterpriseUserResponse();
 

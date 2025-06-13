@@ -40,7 +40,16 @@ namespace Culturapp.Services
 
     public async Task<AddressResponse?> CreateAddressAsync(AddressRequest addressRequest)
     {
-      var existingAddress = await _context.Addresses.FirstOrDefaultAsync(a => a.ZipCode == addressRequest.ZipCode);
+      var existingAddress = await _context.Addresses.FirstOrDefaultAsync(
+        a =>
+        a.ZipCode == addressRequest.ZipCode &&
+        a.Street == addressRequest.Street &&
+        a.AddressNumber == addressRequest.AddressNumber &&
+        a.Complement == addressRequest.Complement &&
+        a.Neighborhood == addressRequest.Neighborhood &&
+        a.City == addressRequest.City &&
+        a.State == addressRequest.State
+      );
       if (existingAddress != null)
       {
         return null;

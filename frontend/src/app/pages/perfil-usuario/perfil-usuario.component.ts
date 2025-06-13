@@ -1,3 +1,4 @@
+import { PhoneService } from './../../services/phone.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -8,6 +9,10 @@ import { ClientUserResponse } from '../../models/client-user-response.model';
 import { ClientUserService } from '../../services/client-user.service';
 import { environment } from '../../../environments/environment.development';
 import { ClientUserRequest } from '../../models/client-user-request.model';
+import { PhoneRequest } from '../../models/phone-request.model';
+import { AddressRequest } from '../../models/address-request.model';
+import { AddressService } from '../../services/address.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   standalone: true,
@@ -24,10 +29,16 @@ export class PerfilUsuarioComponent implements OnInit {
   usuario?: ClientUserResponse;
   usuarioUpdate?: ClientUserRequest;
 
+  phoneUsuario?: PhoneRequest;
+  addressUsuario?: AddressRequest;
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private clientUserService: ClientUserService
+    private clientUserService: ClientUserService,
+    private authService: AuthService,
+    private phoneService: PhoneService,
+    private addressService: AddressService
   ) {
     this.formulario = this.fb.group({
       fullName: [this.usuario?.fullName],
@@ -86,6 +97,62 @@ export class PerfilUsuarioComponent implements OnInit {
       console.log('Dados salvos:', this.formularioUpdate.value);
 
       this.usuarioUpdate = this.formularioUpdate.value;
+
+      this.phoneUsuario = {
+        areaCode: this.formularioUpdate.value.areaCode,
+        phoneNumber: this.formularioUpdate.value.phoneNumber,
+      };
+
+      this.phoneService.createPhone(this.phoneUsuario).subscribe({
+        next: (phone) => {
+          console.log('Telefone criado:', phone);
+        },
+        error: (error) => {
+          console.error('Erro ao criar telefone:', error);
+        }
+      });
+
+      this.phoneService.getPhoneIdByNumber(
+        this.formularioUpdate.value.phoneNumber
+      ).subscribe({
+        next: (phoneId) => {
+          this.usuarioUpdate!.phoneId = phoneId;
+        },
+        error: (error) => {
+          console.error('Erro ao buscar telefone:', error);
+        }
+      });
+
+      this.addressUsuario = {
+        street: this.formularioUpdate.value.street,
+        addressNumber: this.formularioUpdate.value.addressNumber,
+        complement: this.formularioUpdate.value.complement,
+        neighborhood: this.formularioUpdate.value.neighborhood,
+        city: this.formularioUpdate.value.city,
+        state: this.formularioUpdate.value.state,
+        zipCode: this.formularioUpdate.value.zipCode,
+      };
+
+      this.addressService.createAddress(this.addressUsuario).subscribe({
+        next: (address) => {
+          console.log('Endereço criado:', address);
+        },
+        error: (error) => {
+          console.error('Erro ao criar endereço:', error);
+        }
+      });
+
+      this.addressService.getAddressIdByZipCode(
+        this.formularioUpdate.value.zipCode
+      ).subscribe({
+        next: (addressId) => {
+          this.usuarioUpdate!.addressId = addressId;
+        },
+        error: (error) => {
+          console.error('Erro ao buscar endereço:', error);
+        }
+      });
+
       var id = Number(localStorage.getItem('userId'));
 
       this.clientUserService
@@ -102,8 +169,9 @@ export class PerfilUsuarioComponent implements OnInit {
     }
   }
 
-  sair(): void {
-    console.log('Usuário saiu do sistema');
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/home']);
   }
 
   eventos = [
