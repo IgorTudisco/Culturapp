@@ -87,7 +87,7 @@ namespace Culturapp.Controllers
       }
 
       var addressId = await _addressService.GetAddressIdByZipCodeAsync(zipCode);
-      if (addressId == 0)
+      if (addressId == null)
       {
         return NotFound();
       }
